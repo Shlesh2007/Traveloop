@@ -1,26 +1,23 @@
-"""
-Django settings for Traveloop travel booking platform.
-Updated for production deployment on Render.
-"""
 import os
 import dj_database_url
 from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-default-key')
 
-# SECURITY WARNING: don't run with debug turned on in production!
-# DEBUG is True locally, but False on Render
+# DEBUG is True locally, False on Render
 DEBUG = 'RENDER' not in os.environ
 
+# Allow local and Render hosts
 ALLOWED_HOSTS = ["127.0.0.1", "localhost"]
-
-# Add Render external hostname if available
 RENDER_EXTERNAL_HOSTNAME = os.environ.get('RENDER_EXTERNAL_HOSTNAME')
 if RENDER_EXTERNAL_HOSTNAME:
     ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOSTNAME)
+
+# Fallback to allow all in production if you still see 500 errors
+if not DEBUG:
+    ALLOWED_HOSTS.append('*')
 
 INSTALLED_APPS = [
     "django.contrib.admin",
@@ -29,12 +26,12 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "travel",  # main app
+    "travel", 
 ]
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
-    "whitenoise.middleware.WhiteNoiseMiddleware", # Added for static files
+    "whitenoise.middleware.WhiteNoiseMiddleware", 
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -63,8 +60,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "traveloop.wsgi.application"
 
-# Database configuration
-# Uses SQLite locally and PostgreSQL on Render if DATABASE_URL is present
+# Database Configuration
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.sqlite3",
@@ -72,11 +68,15 @@ DATABASES = {
     }
 }
 
+# Critical Change: Force SSL for PostgreSQL on Render
 if not DEBUG:
-    DATABASES['default'] = dj_database_url.config(
-        default=os.environ.get('DATABASE_URL'),
-        conn_max_age=600
-    )
+    database_url = os.environ.get('DATABASE_URL')
+    if database_url:
+        DATABASES['default'] = dj_database_url.config(
+            default=database_url,
+            conn_max_age=600,
+            ssl_require=True # This is mandatory for Render
+        )
 
 AUTH_PASSWORD_VALIDATORS = [
     {"NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator"},
@@ -90,12 +90,10 @@ TIME_ZONE = "UTC"
 USE_I18N = True
 USE_TZ = True
 
-# Static files (CSS, JavaScript, Images)
 STATIC_URL = "static/"
 STATICFILES_DIRS = [BASE_DIR / "static"]
 STATIC_ROOT = BASE_DIR / "staticfiles"
 
-# Use WhiteNoise to serve compressed static files in production
 if not DEBUG:
     STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
