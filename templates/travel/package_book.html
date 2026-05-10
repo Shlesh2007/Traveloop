@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+
+{% block title %}Book Package{% endblock %}
+
+{% block content %}
+<section class="container py-5 text-white">
+
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+
+            <div class="card bg-dark border-secondary shadow-lg overflow-hidden">
+
+                <img src="{{ package.image_url }}"
+                     alt="{{ package.name }}"
+                     style="height:350px;object-fit:cover;width:100%;">
+
+                <div class="card-body p-5">
+
+                    <h1 class="display-6 fw-bold mb-3">
+                        {{ package.name }}
+                    </h1>
+
+                    <p class="text-secondary mb-4">
+                        {{ package.headline }}
+                    </p>
+
+                    <div class="mb-4">
+                        <h4 class="text-info">
+                            ${{ package.price_per_person }}
+                            <small class="text-secondary">per person</small>
+                        </h4>
+                    </div>
+
+                    <form method="post">
+                        {% csrf_token %}
+
+                        <div class="mb-3">
+                            <label class="form-label">Travelers</label>
+                            <input type="number"
+                                   class="form-control bg-black text-white border-secondary"
+                                   min="1"
+                                   value="1">
+                        </div>
+
+                        <div class="mb-4">
+                            <label class="form-label">Special Requests</label>
+                            <textarea rows="4"
+                                      class="form-control bg-black text-white border-secondary"></textarea>
+                        </div>
+
+                        <button class="btn btn-success px-4">
+                            Confirm Booking
+                        </button>
+                    </form>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</section>
+{% endblock %}
