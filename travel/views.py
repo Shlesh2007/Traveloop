@@ -375,6 +375,29 @@ def destination_list(request):
 def package_list(request):
     packages = Package.objects.all()
     return render(request, "travel/package_list.html", {"packages": packages})
+
+def contact(request):
+    return render(request, "travel/contact.html")
+
+
+def newsletter_subscribe(request):
+    if request.method == "POST":
+        email = request.POST.get("email")
+
+        messages.success(request, "Subscribed successfully.")
+
+    return redirect("travel:home")
+
+
+@login_required
+def package_book(request, package_id):
+    package = get_object_or_404(Package, id=package_id)
+
+    return render(request, "travel/package_book.html", {
+        "package": package
+    })
+
+
 def search(request):
     query = request.GET.get("q", "")
 
@@ -386,18 +409,3 @@ def search(request):
         "destinations": destinations,
         "packages": packages,
     })
-    def contact(request):
-    return render(request, "travel/contact.html")def newsletter_subscribe(request):
-    if request.method == "POST":
-        email = request.POST.get("email")
-
-        messages.success(request, "Subscribed successfully.")
-
-    return redirect("travel:home")@login_required
-def package_book(request, package_id):
-    package = get_object_or_404(Package, id=package_id)
-
-    return render(request, "travel/package_book.html", {
-        "package": package
-    })
-
