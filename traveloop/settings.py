@@ -126,7 +126,14 @@ EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD') 
 
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+# 1. Trust the Render domain for security forms (CSRF)
 CSRF_TRUSTED_ORIGINS = [
-    'https://traveloop-1-8f1k.onrender.com',
+    'https://traveloop-dd7e.onrender.com',
     'https://*.onrender.com'
 ]
+
+# 2. Make static file serving more forgiving
+if not DEBUG:
+    # Use StaticFilesStorage instead of CompressedManifestStaticFilesStorage
+    # This stops the 500 error if a single image or CSS file is missing
+    STATICFILES_STORAGE = "whitenoise.storage.StaticFilesStorage"
