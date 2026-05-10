@@ -4,7 +4,7 @@ from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-default-key')
+SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # DEBUG is True locally, False on Render
 DEBUG = 'RENDER' not in os.environ
@@ -117,10 +117,10 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 
 # It will look for 'EMAIL_USER' on Render; if not found, it uses your email as a backup.
-EMAIL_HOST_USER = os.environ.get('EMAIL_USER', 'shleshdarji317@gmail.com')
+EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
 
 # It will look for 'EMAIL_PASSWORD' on Render. 
 # NEVER put the real password string here as a default.
-EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_PASSWORD') 
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD') 
 
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
