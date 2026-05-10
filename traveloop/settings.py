@@ -7,7 +7,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # DEBUG is True locally, False on Render
-DEBUG = 'RENDER' not in os.environ
+DEBUG = True
 
 # Allow local and Render hosts
 ALLOWED_HOSTS = ["127.0.0.1", "localhost","*"]
