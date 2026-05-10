@@ -180,6 +180,9 @@ class Destination(models.Model):
     def __str__(self):
         return self.name
 
+    def get_absolute_url(self):
+        return reverse("travel:destination_list")
+
 class Package(models.Model):
     destination = models.ForeignKey(Destination, on_delete=models.CASCADE, related_name="packages")
     name = models.CharField(max_length=180)
