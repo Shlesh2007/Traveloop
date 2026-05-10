@@ -96,9 +96,11 @@ STATIC_URL = '/static/'
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
+# Change this specific block in your traveloop/settings.py
 if not DEBUG:
-    STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
-
+    # Use the non-manifest version to prevent crashes over missing assets
+    STATICFILES_STORAGE = "whitenoise.storage.StaticFilesStorage"
+    
 MEDIA_URL = "media/"
 MEDIA_ROOT = BASE_DIR / "media"
 
@@ -124,3 +126,7 @@ EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD') 
 
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+CSRF_TRUSTED_ORIGINS = [
+    'https://traveloop-1-8f1k.onrender.com',
+    'https://*.onrender.com'
+]
