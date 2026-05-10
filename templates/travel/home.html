@@ -5,11 +5,27 @@
 
 {% block content %}
 <!-- HERO -->
-<section class="relative min-h-screen flex flex-col justify-center overflow-hidden">
-  <div class="absolute inset-0 bg-cover bg-center scale-105" style="background-image:url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=2000&q=80');"></div>
-  <div class="absolute inset-0 hero-gradient-overlay"></div>
-  <div class="container relative z-10 pt-32 pb-24">
-    <div class="row align-items-center g-5">
+<section class="position-relative min-vh-100 d-flex flex-column justify-content-center overflow-hidden">
+
+  <!-- Background Image -->
+  <div
+    class="position-absolute top-0 start-0 w-100 h-100"
+    style="
+      background-image:url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=2000&q=80');
+      background-size:cover;
+      background-position:center;
+      z-index:1;
+    ">
+  </div>
+
+  <!-- Overlay -->
+  <div
+    class="position-absolute top-0 start-0 w-100 h-100 hero-gradient-overlay"
+    style="z-index:2;">
+  </div>
+
+  <!-- Main Content -->
+  <div class="container position-relative pt-5 pb-5" style="z-index:3;">    <div class="row align-items-center g-5">
       <div class="col-lg-7 text-white">
         <p class="text-sm uppercase tracking-widest text-sky-200/90 mb-3">Elevated travel planning</p>
         <h1 class="display-3 font-display fw-bold leading-tight mb-4">
