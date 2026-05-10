@@ -6,6 +6,10 @@ app_name = "travel"
 
 urlpatterns = [
     path("", views.home, name="home"),
+    path("search/", views.search, name="search"),
+path("contact/", views.contact, name="contact"),
+path("newsletter/", views.newsletter_subscribe, name="newsletter_subscribe"),
+path("package/<int:package_id>/book/", views.package_book, name="package_book"),
     path("destinations/", views.destination_list, name="destination_list"),
     path("packages/", views.package_list, name="package_list"),
     path("dashboard/", views.dashboard, name="dashboard"),
