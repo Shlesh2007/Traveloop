@@ -361,12 +361,15 @@ def home(request):
         "avg_rating": 4.9
     }
     
-    return render(request, "travel/home.html", {
-        "featured_destinations": featured_destinations,
-        "popular_packages": popular_packages,
-        "search_form": search_form,
-        "stats": stats
-    })
+testimonials = []
+
+return render(request, "travel/home.html", {
+    "featured_destinations": featured_destinations,
+    "popular_packages": popular_packages,
+    "search_form": search_form,
+    "stats": stats,
+    "testimonials": testimonials,
+})
 
 def destination_list(request):
     destinations = Destination.objects.all()
