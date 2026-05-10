@@ -6,7 +6,6 @@ from django.http import Http404
 from django.shortcuts import get_object_or_404, redirect, render
 from django.utils import timezone
 from django.views.decorators.http import require_POST
-from .models import Destination
 
 from .forms import (
     ActivityForm,
@@ -18,8 +17,17 @@ from .forms import (
     SearchForm,
     TripForm,
 )
-from .models import Activity, Budget, CityStop, Note, PackingItem, Trip, UserProfile
-
+from .models import (
+    Activity,
+    Budget,
+    CityStop,
+    Note,
+    PackingItem,
+    Trip,
+    UserProfile,
+    Destination,
+    Package,
+)
 
 def _user_trip_or_404(user, trip_id):
     return get_object_or_404(Trip, pk=trip_id, user=user)
